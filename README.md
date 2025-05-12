@@ -6,7 +6,7 @@ e Componentes Mecânicos.
 
 ## Diagrama de Classes do Projeto
 
-![Arquitetura de Classes Project Mgmt]https://github.com/mcscorazza/DM106ProjectMgmt/blob/main/DM106ProjectMgmt/docs/Diadrama%20de%20Classes.png
+![Arquitetura de Classes Project Mgmt](https://github.com/mcscorazza/DM106ProjectMgmt/blob/main/DM106ProjectMgmt/docs/Diadrama%20de%20Classes.png)
 
 
 ## Aluno: 
