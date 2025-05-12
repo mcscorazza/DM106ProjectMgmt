@@ -21,7 +21,7 @@ namespace DM106ProjectMgmt_Console
         }
         public override string ToString()
         {
-            return $@"Tarefa: {Title}, Resp.: {Owner}, Status: {Status}";
+            return $"| {Title,-50} | {Owner,-15} | {Status,15} |";
         }
     }
 

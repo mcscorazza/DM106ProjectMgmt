@@ -2,20 +2,20 @@
 
 internal class Program
 {
-    private static Dictionary<string, Project> ProjectList = new();
+    private static Dictionary<string, MachineDesign> DesignList = new();
     private static void Main(string[] args)
     {
         bool exit = false;
         while (!exit)
         {
-            Console.WriteLine("Bem vindo ao Gerenciador de Projetos DM106!\n");
+            Console.WriteLine("Bem vindo ao Gerenciador de Projetos de Máquinas DM106!\n");
             Console.WriteLine("[ 1 ] Criar um novo projeto");
             Console.WriteLine("[ 2 ] Adicionar tarefa a um projeto existente");
             Console.WriteLine("[ 3 ] Listar todos os projetos");
             Console.WriteLine("[ 4 ] Listar tarefas de um projeto");
             Console.WriteLine("[-1 ] para sair\n ");
             Console.WriteLine("Escolha uma opção:");
-
+                        
             int option = int.Parse(Console.ReadLine());
 
             switch (option) {
@@ -39,7 +39,9 @@ internal class Program
                     Console.WriteLine("Opção inválida. Tente novamente.");
                     break;
             }
-            Thread.Sleep(1500);
+            //Thread.Sleep(3000);
+            Console.WriteLine("\nPressione qualquer tecla...");
+            Console.ReadKey();
             Console.Clear();
 
         }
@@ -51,9 +53,9 @@ internal class Program
         Console.WriteLine("Lista de Tarefas de um Projeto\n");
         Console.Write("Digite o Nome do Projeto que deseja consultar: ");
         string projectName = Console.ReadLine();
-        if (ProjectList.ContainsKey(projectName))
+        if (DesignList.ContainsKey(projectName))
         {
-            Project p = ProjectList[projectName];
+            MachineDesign p = DesignList[projectName];
             p.showTasks();
         }
         else
@@ -66,7 +68,7 @@ internal class Program
     {
         Console.Clear();
         Console.WriteLine("Lista de Projetos\n");
-        foreach (var project in ProjectList.Values)
+        foreach (var project in DesignList.Values)
         {
             Console.WriteLine(project);
         }
@@ -78,9 +80,9 @@ internal class Program
         Console.WriteLine("Registro de Tarefas\n");
         Console.Write("Digite o Nome do Projeto cuja Tarefa deseja registrar: ");
         string projectName = Console.ReadLine();
-        if (ProjectList.ContainsKey(projectName))
+        if (DesignList.ContainsKey(projectName))
         {
-            Project p = ProjectList[projectName];
+            MachineDesign p = DesignList[projectName];
             Console.Write("Digite o Título da Tarefa: ");
             string title = Console.ReadLine();
             Console.Write("Digite o Nome do Responsável pela Tarefa: ");
@@ -107,8 +109,8 @@ internal class Program
         string drawingCode = Console.ReadLine();
         Console.Write($"Digite o Nome do Cliente para o Projeto [{name}]: ");
         string client = Console.ReadLine();
-        Project project = new Project(name, drawingCode, client);
-        ProjectList.Add(name, project);
+        MachineDesign project = new MachineDesign(name, drawingCode, client);
+        DesignList.Add(name, project);
         Console.WriteLine($"O Projeto [{name}] foi registrado com sucesso!");
     }
 }

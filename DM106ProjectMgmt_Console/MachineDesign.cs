@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DM106ProjectMgmt_Console
 {
-    internal class Project
+    internal class MachineDesign
     {
         public string Name { get; set; }
         public string DrawingCode { get; set; }
         public string Client { get; set; }
         private List<JobTask> JobTasks { get; set; } = new List<JobTask>();
 
-        public Project(string name, string drawingCode, string client)
+        public MachineDesign(string name, string drawingCode, string client)
         {
             Name = name;
             DrawingCode = drawingCode;
@@ -33,11 +33,15 @@ namespace DM106ProjectMgmt_Console
         {
             if (JobTasks.Count > 0)
             {
-                Console.WriteLine($"Tarefas do Projeto {Name}:");
+                Console.WriteLine($"Tarefas do Projeto [{Name}]:");
+                Console.WriteLine($"|----------------------------------------------------|-----------------|-----------------|");
+                Console.WriteLine($"| TAREFA                                             | RESPONSÁVEL     |          STATUS |");
+                Console.WriteLine($"|----------------------------------------------------|-----------------|-----------------|");
                 foreach (var task in JobTasks)
                 {
                     Console.WriteLine(task);
                 }
+                Console.WriteLine($"|----------------------------------------------------|-----------------|-----------------|");
             }
             else
             {
