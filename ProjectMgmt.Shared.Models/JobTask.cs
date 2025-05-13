@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DM106ProjectMgmt_Console
+namespace DM106ProjectMgmt.Shared.Models
 {
-    internal class JobTask
+    public class JobTask
     {
         public string Title { get; set; }
         public string Owner { get; set; }

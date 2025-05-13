@@ -1,10 +1,22 @@
-﻿using DM106ProjectMgmt_Console;
+﻿using DM106ProjectMgmt.Shared.Data.DB;
+using DM106ProjectMgmt.Shared.Models;
 
 internal class Program
 {
     private static Dictionary<string, MachineDesign> DesignList = new();
     private static void Main(string[] args)
     {
+        try
+        {
+            using var connection = new Connection().Connect();
+            connection.Open();
+            Console.WriteLine(connection.State);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro: {ex.Message}");
+        }
+        return;
         bool exit = false;
         while (!exit)
         {

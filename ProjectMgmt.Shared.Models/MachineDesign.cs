@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DM106ProjectMgmt_Console
+namespace DM106ProjectMgmt.Shared.Models
 {
-    internal class MachineDesign
+    public class MachineDesign
     {
         public string Name { get; set; }
         public string DrawingCode { get; set; }
@@ -34,14 +34,14 @@ namespace DM106ProjectMgmt_Console
             if (JobTasks.Count > 0)
             {
                 Console.WriteLine($"Tarefas do Projeto [{Name}]:");
-                Console.WriteLine($"|----------------------------------------------------|-----------------|-----------------|");
+                Console.WriteLine($"------------------------------------------------------------------------------------------");
                 Console.WriteLine($"| TAREFA                                             | RESPONSÁVEL     |          STATUS |");
                 Console.WriteLine($"|----------------------------------------------------|-----------------|-----------------|");
                 foreach (var task in JobTasks)
                 {
                     Console.WriteLine(task);
                 }
-                Console.WriteLine($"|----------------------------------------------------|-----------------|-----------------|");
+                Console.WriteLine($"------------------------------------------------------------------------------------------");
             }
             else
             {
