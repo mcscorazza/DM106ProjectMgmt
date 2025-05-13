@@ -1,8 +1,7 @@
-# Trabalho DM110
+# Trabalho DM106
 O projeto “ProjectMgmt” é uma aplicação web desenvolvida em ASP.NET Core
 com o objetivo de gerenciar Projetos Mecânicos online. 
-Ele permitirá o cadastro e gerenciamento de Projetos, Tarefas
-e Componentes Mecânicos.
+Ele permitirá o cadastro e gerenciamento de Projetos de Maquinas, Tarefas e Componentes Mecânicos.
 
 ## Diagrama de Classes do Projeto
 
