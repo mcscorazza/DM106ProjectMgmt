@@ -6,57 +6,62 @@ internal class Program
     private static Dictionary<string, MachineDesign> DesignList = new();
     private static void Main(string[] args)
     {
-        try
+        var MachineDesignDAL = new MachineDesignDAL();
+
+        // MachineDesignDAL.Create(new MachineDesign("Projeto 1", "12345", "Cliente A"));
+
+        MachineDesignDAL.Update(new MachineDesign("Suspensão", "DES004", "RODOMEU"), 2002);
+
+        var designList = MachineDesignDAL.Read();
+
+        foreach (var design in designList)
         {
-            using var connection = new Connection().Connect();
-            connection.Open();
-            Console.WriteLine(connection.State);
+            Console.WriteLine($"Projeto: {design.Name}");
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Erro: {ex.Message}");
-        }
+
+        MachineDesignDAL.Delete(2002);
+
         return;
-        bool exit = false;
-        while (!exit)
-        {
-            Console.WriteLine("Bem vindo ao Gerenciador de Projetos de Máquinas DM106!\n");
-            Console.WriteLine("[ 1 ] Criar um novo projeto");
-            Console.WriteLine("[ 2 ] Adicionar tarefa a um projeto existente");
-            Console.WriteLine("[ 3 ] Listar todos os projetos");
-            Console.WriteLine("[ 4 ] Listar tarefas de um projeto");
-            Console.WriteLine("[-1 ] para sair\n ");
-            Console.WriteLine("Escolha uma opção:");
+
+        //bool exit = false;
+        //while (!exit)
+        //{
+        //    Console.WriteLine("Bem vindo ao Gerenciador de Projetos de Máquinas DM106!\n");
+        //    Console.WriteLine("[ 1 ] Criar um novo projeto");
+        //    Console.WriteLine("[ 2 ] Adicionar tarefa a um projeto existente");
+        //    Console.WriteLine("[ 3 ] Listar todos os projetos");
+        //    Console.WriteLine("[ 4 ] Listar tarefas de um projeto");
+        //    Console.WriteLine("[-1 ] para sair\n ");
+        //    Console.WriteLine("Escolha uma opção:");
                         
-            int option = int.Parse(Console.ReadLine());
+        //    int option = int.Parse(Console.ReadLine());
 
-            switch (option) {
-                case -1:
-                    Console.WriteLine("Até mais!");
-                    exit = true;
-                    break;
-                case 1:
-                    ProjectCreation();
-                    break;
-                case 2:
-                    TaskCreation();
-                    break;
-                case 3:
-                    GetProjects();
-                    break;
-                case 4:
-                    GetProjectTasks();
-                    break;
-                default:
-                    Console.WriteLine("Opção inválida. Tente novamente.");
-                    break;
-            }
-            //Thread.Sleep(3000);
-            Console.WriteLine("\nPressione qualquer tecla...");
-            Console.ReadKey();
-            Console.Clear();
-
-        }
+        //    switch (option) {
+        //        case -1:
+        //            Console.WriteLine("Até mais!");
+        //            exit = true;
+        //            break;
+        //        case 1:
+        //            ProjectCreation();
+        //            break;
+        //        case 2:
+        //            TaskCreation();
+        //            break;
+        //        case 3:
+        //            GetProjects();
+        //            break;
+        //        case 4:
+        //            GetProjectTasks();
+        //            break;
+        //        default:
+        //            Console.WriteLine("Opção inválida. Tente novamente.");
+        //            break;
+        //    }
+        //    //Thread.Sleep(3000);
+        //    Console.WriteLine("\nPressione qualquer tecla...");
+        //    Console.ReadKey();
+        //    Console.Clear();
+        //}
     }
 
     private static void GetProjectTasks()
