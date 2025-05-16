@@ -1,15 +1,12 @@
-﻿using DM106ProjectMgmt.Shared.Data.DB;
-using DM106ProjectMgmt.Shared.Models;
+﻿using DM106ProjectMgmt_Console;
 
 internal class Program
 {
-    private static Dictionary<string, MachineDesign> DesignList = new();
     private static void Main(string[] args)
     {
-        var MachineDesignDAL = new DAL<MachineDesign>();
+        Dictionary<string, MachineDesign> DesignList = new();
 
-        // return; 
-
+        // Menu para cadastro dos projetos e tarefas
         bool exit = false;
         while (!exit)
         {
@@ -67,8 +64,8 @@ internal class Program
             // Instancia um novo projeto
             MachineDesign project = new(name, drawingCode, client);
 
-            // Cria novo Projeto na Tabela
-            MachineDesignDAL.Create(project);
+            // Cria novo Projeto no DB
+            DesignList.Add(name, project);
             //DesignList.Add(name, project);
             Console.WriteLine($"O Projeto [{name}] foi registrado com sucesso!");
         }
@@ -80,30 +77,25 @@ internal class Program
             Console.Clear();
             Console.WriteLine("Registro de Tarefas\n");
             Console.Write("Digite o Nome do Projeto cuja Tarefa deseja registrar: ");
-            string projectName = Console.ReadLine();
-            var targetDesign = MachineDesignDAL.ReadBy(x => x.Name.Equals(projectName));
+            string ProjectName = Console.ReadLine();
 
             // Verifica se o projeto existe
-            if (targetDesign is not null)
-            {
-                // Caso o Projeto exista, solicita os Dados da Tarefa
+            if (DesignList.ContainsKey(ProjectName)) {
                 Console.Write("Digite o Título da Tarefa: ");
                 string title = Console.ReadLine();
                 Console.Write("Digite o Nome do Responsável pela Tarefa: ");
                 string owner = Console.ReadLine();
                 Console.Write("Digite o Status da Tarefa: ");
                 string status = Console.ReadLine();
-
+                MachineDesign Project = DesignList[ProjectName];
+                
                 // Adiciona a nova tarefa ao projeto
-                targetDesign.AddTask(new JobTask(title, owner, status));
-
-                // Atualiza o projeto na tabela
-                MachineDesignDAL.Update(targetDesign);
-                Console.WriteLine($"A tarefa [{title}] foi registrada com sucesso no projeto [{projectName}]!");
+                Project.AddTask(new JobTask(title, owner, status));
+                Console.WriteLine($"A tarefa [{title}] foi registrada com sucesso no projeto [{ProjectName}]!");
             }
             else
             {
-                Console.WriteLine($"O projeto [{projectName}] não existe.");
+                Console.WriteLine($"O projeto [{ProjectName}] não existe.");
             }
         }
 
@@ -113,7 +105,7 @@ internal class Program
             Console.Clear();
             Console.WriteLine("Lista de Projetos\n");
             // Lê todos os projetos da tabela
-            foreach (var project in MachineDesignDAL.Read())
+            foreach (var project in DesignList.Values)
             {
                 Console.WriteLine(project);
             }
@@ -126,12 +118,14 @@ internal class Program
             Console.Clear();
             Console.WriteLine("Lista de Tarefas de um Projeto\n");
             Console.Write("Digite o Nome do Projeto que deseja consultar: ");
-            string projectName = Console.ReadLine();
-            var targetDesign = MachineDesignDAL.ReadBy(x => x.Name.Equals(projectName));
-
+            string ProjectName = Console.ReadLine();
             // Verifica se o projeto existe
-            if (targetDesign is not null) targetDesign.showTasks();
-            else Console.WriteLine($"O projeto [{projectName}] não existe.");
+            if (DesignList.ContainsKey(ProjectName))
+            {
+                MachineDesign project = DesignList[ProjectName];
+                project.showTasks();
+            }
+            else Console.WriteLine($"O projeto [{ProjectName}] não existe.");
         }
     }
 }
