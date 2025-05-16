@@ -8,6 +8,8 @@ internal class Program
     {
         var MachineDesignDAL = new DAL<MachineDesign>();
 
+        // return; 
+
         bool exit = false;
         while (!exit)
         {

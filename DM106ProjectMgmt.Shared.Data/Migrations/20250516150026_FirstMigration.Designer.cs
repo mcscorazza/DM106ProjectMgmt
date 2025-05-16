@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DM106ProjectMgmt.Shared.Data.Migrations
 {
     [DbContext(typeof(ProjectMgmtContex))]
-    [Migration("20250516005816_FirstMigration")]
+    [Migration("20250516150026_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectMgmt.Shared.Models\DM106ProjectMgmt.Shared.Models.csproj" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
