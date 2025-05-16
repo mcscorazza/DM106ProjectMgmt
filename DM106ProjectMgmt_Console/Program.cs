@@ -5,24 +5,11 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var MachineDesignDAL = new MachineDesignDAL();
-
-        //MachineDesignDAL.Create(new MachineDesign("PISTÃO", "PTA-12345", "PARKER"));
-        MachineDesignDAL.Update(new MachineDesign("PISTÃO MOD", "PTA-12345", "PARKER"), 1002);
-
-        var designList = MachineDesignDAL.Read();
-        foreach (var design in designList)
-        {
-            Console.WriteLine(design);
-        }
-
-        MachineDesignDAL.Delete(1002);
-
-
+        var MachineDesignDAL = new MachineDesignDAL(new DM106ProjectMgmtContext());
+        var JobTaskDAL = new JobTaskDAL(new DM106ProjectMgmtContext());
 
         Dictionary<string, MachineDesign> DesignList = new();
 
-        return;
         // Menu para cadastro dos projetos e tarefas
         bool exit = false;
         while (!exit)
@@ -82,8 +69,7 @@ internal class Program
             MachineDesign project = new(name, drawingCode, client);
 
             // Cria novo Projeto no DB
-            DesignList.Add(name, project);
-            //DesignList.Add(name, project);
+            MachineDesignDAL.Create(project);
             Console.WriteLine($"O Projeto [{name}] foi registrado com sucesso!");
         }
 
@@ -122,7 +108,7 @@ internal class Program
             Console.Clear();
             Console.WriteLine("Lista de Projetos\n");
             // Lê todos os projetos da tabela
-            foreach (var project in DesignList.Values)
+            foreach (var project in MachineDesignDAL.Read())
             {
                 Console.WriteLine(project);
             }

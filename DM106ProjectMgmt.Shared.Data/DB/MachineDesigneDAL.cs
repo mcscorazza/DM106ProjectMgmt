@@ -8,65 +8,38 @@ using System.Threading.Tasks;
 
 namespace DM106ProjectMgmt.Shared.Data.DB
 {
+ 
     public class MachineDesignDAL
     {
+        private readonly DM106ProjectMgmtContext context;
+        public MachineDesignDAL(DM106ProjectMgmtContext context)
+        {
+            this.context = context;
+        }
         public void Create(MachineDesign design)
         {
-            using var connection = new Connection().Connect();
-            connection.Open();
-            string sql = "INSERT INTO MachineDesign (Name, DrawingCode, Client) VALUES (@Name, @DrawingCode, @Client)";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@Name", design.Name);
-            cmd.Parameters.AddWithValue("@DrawingCode", design.DrawingCode);
-            cmd.Parameters.AddWithValue("@Client", design.Client);
-            int cmdReturn = cmd.ExecuteNonQuery();
-            Console.WriteLine($"Linhas afetadas: {cmdReturn}");
+            context.MachineDesign.Add(design);
+            context.SaveChanges();
         }
-        public void Update(MachineDesign design, int Id)
+        public void Update(MachineDesign design)
         {
-            using var connection = new Connection().Connect();
-            connection.Open();
-            string sql = "UPDATE MachineDesign SET Name = @Name, DrawingCode = @DrawingCode, Client = @Client WHERE Id = @id";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@Name", design.Name);
-            cmd.Parameters.AddWithValue("@DrawingCode", design.DrawingCode);
-            cmd.Parameters.AddWithValue("@Client", design.Client);
-            cmd.Parameters.AddWithValue("@id", Id);
-            int cmdReturn = cmd.ExecuteNonQuery();
-            Console.WriteLine($"Linhas afetadas: {cmdReturn}");
+            context.MachineDesign.Update(design);
+            context.SaveChanges();
         }
-        public void Delete(int Id)
+        public void Delete(MachineDesign design)
         {
-            using var connection = new Connection().Connect();
-            connection.Open();
-            string sql = "DELETE FROM MachineDesign WHERE Id = @id";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@id", Id);
-            int cmdReturn = cmd.ExecuteNonQuery();
-            Console.WriteLine($"Linhas afetadas: {cmdReturn}");
+            context.MachineDesign.Remove(design);
+            context.SaveChanges();
         }
         public IEnumerable<MachineDesign> Read()
         {
-            var list = new List<MachineDesign>();
-
-            using var connection = new Connection().Connect();
-            connection.Open();
-            string sql = "SELECT * FROM MachineDesign";
-            SqlCommand cmd = new SqlCommand(sql, connection);
-
-            using SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                string name = reader["Name"].ToString();
-                string drawingCode = reader["DrawingCode"].ToString();
-                string client = reader["Client"].ToString();
-                MachineDesign Design = new MachineDesign(name, drawingCode, client);
-                list.Add(Design);
-            }
-
-            return list;
+            return context.MachineDesign.ToList();
         }
+        public MachineDesign? ReadByName(string name)
+        {
+            return context.MachineDesign.FirstOrDefault(x => x.Name == name);
+        }
+
     }
 }
 

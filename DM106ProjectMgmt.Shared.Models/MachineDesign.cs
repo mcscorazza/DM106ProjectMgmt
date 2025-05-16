@@ -8,6 +8,7 @@ namespace DM106ProjectMgmt.Shared.Models
 {
     public class MachineDesign
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string DrawingCode { get; set; }
         public string Client { get; set; }
@@ -52,7 +53,7 @@ namespace DM106ProjectMgmt.Shared.Models
         // Sobrescreve o método ToString() para exibir informações do projeto
         public override string ToString()
         {
-            return $@"Projeto: {Name}";
+            return $@"| {Id} | Projeto: {Name}";
         }
 
     }

@@ -8,6 +8,7 @@ namespace DM106ProjectMgmt.Shared.Models
 {
     public class JobTask
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Owner { get; set; }
         public string Status { get; set; }
