@@ -27,6 +27,11 @@ namespace DM106ProjectMgmt.Shared.Data.DB
         {
             return context.Set<T>().ToList();
         }
+        public void Delete(T value)
+        {
+            context.Set<T>().Remove(value);
+            context.SaveChanges();
+        }
         public T? ReadBy(Func<T, bool> predicate)
         {
             return context.Set<T>().FirstOrDefault(predicate);
