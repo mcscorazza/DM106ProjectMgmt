@@ -13,7 +13,7 @@ namespace DM106ProjectMgmt.Shared.Models
         public string DrawingCode { get; set; }
         public string Client { get; set; }
 
-        public ICollection<JobTask> JobTasks { get; set; } = new List<JobTask>();
+        public virtual ICollection<JobTask> JobTasks { get; set; } = new List<JobTask>();
 
         // Construtor da classe MachineDesign
         public MachineDesign(string name, string drawingCode, string client)

@@ -27,7 +27,7 @@ namespace DM106ProjectMgmt.Shared.Data.DB
         {
             return context.Set<T>().ToList();
         }
-        public T? ReadByName(Func<T, bool> predicate)
+        public T? ReadBy(Func<T, bool> predicate)
         {
             return context.Set<T>().FirstOrDefault(predicate);
         }

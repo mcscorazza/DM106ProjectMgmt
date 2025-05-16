@@ -13,6 +13,9 @@ namespace DM106ProjectMgmt.Shared.Models
         public string Owner { get; set; }
         public string Status { get; set; }
 
+        // Referência para o projeto associado
+        public virtual MachineDesign? MachineDesign { get; set; }
+
         // Construtor da classe JobTask
         public JobTask(string title, string owner, string status)
         {

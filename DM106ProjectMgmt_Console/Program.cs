@@ -8,8 +8,6 @@ internal class Program
         var MachineDesignDAL = new DAL<MachineDesign>(new DM106ProjectMgmtContext());
         var JobTaskDAL = new DAL<JobTask>(new DM106ProjectMgmtContext());
 
-        Dictionary<string, MachineDesign> DesignList = new();
-
         // Menu para cadastro dos projetos e tarefas
         bool exit = false;
         while (!exit)
@@ -82,18 +80,24 @@ internal class Program
             Console.Write("Digite o Nome do Projeto cuja Tarefa deseja registrar: ");
             string ProjectName = Console.ReadLine();
 
+            var targetDesign = MachineDesignDAL.ReadBy(x => x.Name.Equals(ProjectName));
+
             // Verifica se o projeto existe
-            if (DesignList.ContainsKey(ProjectName)) {
+            if (targetDesign is not null)
+            {
                 Console.Write("Digite o Título da Tarefa: ");
                 string title = Console.ReadLine();
                 Console.Write("Digite o Nome do Responsável pela Tarefa: ");
                 string owner = Console.ReadLine();
                 Console.Write("Digite o Status da Tarefa: ");
                 string status = Console.ReadLine();
-                MachineDesign Project = DesignList[ProjectName];
                 
                 // Adiciona a nova tarefa ao projeto
-                Project.AddTask(new JobTask(title, owner, status));
+                targetDesign.AddTask(new JobTask(title, owner, status));
+
+                // Atualiza o projeto na tabela
+                MachineDesignDAL.Update(targetDesign);
+
                 Console.WriteLine($"A tarefa [{title}] foi registrada com sucesso no projeto [{ProjectName}]!");
             }
             else
@@ -122,12 +126,10 @@ internal class Program
             Console.WriteLine("Lista de Tarefas de um Projeto\n");
             Console.Write("Digite o Nome do Projeto que deseja consultar: ");
             string ProjectName = Console.ReadLine();
-            // Verifica se o projeto existe
-            if (DesignList.ContainsKey(ProjectName))
-            {
-                MachineDesign project = DesignList[ProjectName];
-                project.showTasks();
-            }
+            var targetDesign = MachineDesignDAL.ReadBy(x => x.Name.Equals(ProjectName));
+            // Verifica se o projeto existe e Lista as Tarefas
+            if (targetDesign is not null) targetDesign.showTasks();
+            // Se o projeto não existe, exibe mensagem de erro
             else Console.WriteLine($"O projeto [{ProjectName}] não existe.");
         }
     }
