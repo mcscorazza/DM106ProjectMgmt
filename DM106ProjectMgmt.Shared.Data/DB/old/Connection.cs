@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DM106ProjectMgmt.Shared.Data.DB
+namespace DM106ProjectMgmt.Shared.Data.DB.old
 {
     public class Connection
     {

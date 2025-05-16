@@ -12,7 +12,8 @@ namespace DM106ProjectMgmt.Shared.Models
         public string Title { get; set; }
         public string Owner { get; set; }
         public string Status { get; set; }
-
+        public int Id { get; set; }
+        public virtual MachineDesign? MachineDesign { get; set; }
         public JobTask(string title, string owner, string status)
         {
             Title = title;
