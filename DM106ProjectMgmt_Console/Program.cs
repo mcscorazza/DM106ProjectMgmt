@@ -5,8 +5,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var MachineDesignDAL = new MachineDesignDAL(new DM106ProjectMgmtContext());
-        var JobTaskDAL = new JobTaskDAL(new DM106ProjectMgmtContext());
+        var MachineDesignDAL = new DAL<MachineDesign>(new DM106ProjectMgmtContext());
+        var JobTaskDAL = new DAL<JobTask>(new DM106ProjectMgmtContext());
 
         Dictionary<string, MachineDesign> DesignList = new();
 
