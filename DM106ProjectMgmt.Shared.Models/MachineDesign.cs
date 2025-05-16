@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DM106ProjectMgmt_Console
+namespace DM106ProjectMgmt.Shared.Models
 {
-    internal class MachineDesign
+    public class MachineDesign
     {
         public string Name { get; set; }
         public string DrawingCode { get; set; }

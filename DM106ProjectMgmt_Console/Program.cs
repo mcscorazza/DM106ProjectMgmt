@@ -1,11 +1,28 @@
-﻿using DM106ProjectMgmt_Console;
+﻿using DM106ProjectMgmt.Shared.Data.DB;
+using DM106ProjectMgmt.Shared.Models;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
+        var MachineDesignDAL = new MachineDesignDAL();
+
+        //MachineDesignDAL.Create(new MachineDesign("PISTÃO", "PTA-12345", "PARKER"));
+        MachineDesignDAL.Update(new MachineDesign("PISTÃO MOD", "PTA-12345", "PARKER"), 1002);
+
+        var designList = MachineDesignDAL.Read();
+        foreach (var design in designList)
+        {
+            Console.WriteLine(design);
+        }
+
+        MachineDesignDAL.Delete(1002);
+
+
+
         Dictionary<string, MachineDesign> DesignList = new();
 
+        return;
         // Menu para cadastro dos projetos e tarefas
         bool exit = false;
         while (!exit)
