@@ -12,22 +12,27 @@ namespace DM106ProjectMgmt_API.EndPoints
 
         public static void AddEndPointsMachineDesign(this WebApplication app)
         {
+
+            var groupBuilder = app.MapGroup("design")
+                .RequireAuthorization()
+                .WithTags("MachineDesign");
+
             // Endpoints para MachineDesign
-            app.MapGet("/design", ([FromServices] DAL<MachineDesign> dal) =>
+            groupBuilder.MapGet("", ([FromServices] DAL<MachineDesign> dal) =>
             {
                 var designList = dal.Read();
                 if (designList is null) return Results.NotFound();
                 return Results.Ok(EntityListToResponseList(designList));
             }
-            );
-            app.MapGet("/design/{id}", (int id, [FromServices] DAL<MachineDesign> dal) =>
+            ).RequireAuthorization();
+            groupBuilder.MapGet("/{id}", (int id, [FromServices] DAL<MachineDesign> dal) =>
             {
                 var design = dal.ReadBy(d => d.Id == id);
                 if (design is null) return Results.NotFound();
                 return Results.Ok(EntityToResponse(design));
             });
 
-            app.MapPost("/design", ([FromServices] DAL<MachineDesign> dal, [FromServices] DAL<Components> dalComponents, [FromBody] MachineDesignRequest design) =>
+            groupBuilder.MapPost("", ([FromServices] DAL<MachineDesign> dal, [FromServices] DAL<Components> dalComponents, [FromBody] MachineDesignRequest design) =>
             {
                 var machineDesign = new MachineDesign(design.Name, design.DrawingCode, design.Client)
                 {
@@ -39,7 +44,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Created();
             });
 
-            app.MapPut("/design", ([FromServices] DAL<MachineDesign> dal, [FromBody] MachineDesignEditRequest designRequest) =>
+            groupBuilder.MapPut("", ([FromServices] DAL<MachineDesign> dal, [FromBody] MachineDesignEditRequest designRequest) =>
             {
                 var designToEdit = dal.ReadBy(d => d.Id == designRequest.Id);
                 if (designToEdit is null) return Results.NotFound();
@@ -50,7 +55,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Created();
             });
 
-            app.MapDelete("/design/{id}", ([FromServices] DAL<MachineDesign> dal, int id) =>
+            groupBuilder.MapDelete("/{id}", ([FromServices] DAL<MachineDesign> dal, int id) =>
             {
                 var design = dal.ReadBy(d => d.Id == id);
                 if (design is null) return Results.NotFound();
@@ -92,7 +97,19 @@ namespace DM106ProjectMgmt_API.EndPoints
         // Converte um projeto para uma resposta
         private static MachineDesignResponse EntityToResponse(MachineDesign entity)
         {
-            return new MachineDesignResponse(entity.Id, entity.Name, entity.DrawingCode, entity.Client);
+            return new MachineDesignResponse(
+                entity.Id, 
+                entity.Name, 
+                entity.DrawingCode, 
+                entity.Client, 
+                entity.JobTasks.Select(task => new JobTaskResponse(
+                    task.Owner,
+                    task.Owner,
+                    task.Status)).ToList(),
+                entity.Components.Select(comp => new ComponentsResponse(
+                    comp.PartNumber,
+                    comp.Description)).ToList()
+                );
         }
     }
 }

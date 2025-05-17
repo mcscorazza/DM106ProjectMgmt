@@ -1,4 +1,6 @@
-﻿using DM106ProjectMgmt.Shared.Models;
+﻿using DM106ProjectMgmt.Shared.Data.Models;
+using DM106ProjectMgmt.Shared.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DM106ProjectMgmt.Shared.Data.DB
 {
-    public class DM106ProjectMgmtContext : DbContext
+    public class DM106ProjectMgmtContext : IdentityDbContext<AccessUser, AccessRole, int>
     {
         public DbSet<MachineDesign> MachineDesign { get; set; }
         public DbSet<JobTask> JobTask { get; set; }
@@ -25,6 +27,7 @@ namespace DM106ProjectMgmt.Shared.Data.DB
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<MachineDesign>()
                 .HasMany(c => c.Components)
                 .WithMany(d => d.Design);

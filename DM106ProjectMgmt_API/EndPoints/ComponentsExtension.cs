@@ -10,27 +10,31 @@ namespace DM106ProjectMgmt_API.EndPoints
     {
         public static void AddEndPointsComponents(this WebApplication app)
         {
+            var groupBuilder = app.MapGroup("component")
+                .RequireAuthorization()
+                .WithTags("Components");
+
             // Endpoints para JobTasks
-            app.MapGet("/component", ([FromServices] DAL<Components> dal) =>
+            groupBuilder.MapGet("", ([FromServices] DAL<Components> dal) =>
             {
                 var componentList = dal.Read();
                 if (componentList is null) return Results.NotFound();
                 return Results.Ok(EntityListToResponseList(componentList));
             });
-            app.MapGet("/component/{id}", (int id, [FromServices] DAL<Components> dal) =>
+            groupBuilder.MapGet("/{id}", (int id, [FromServices] DAL<Components> dal) =>
             {
                 var component = dal.ReadBy(c => c.Id == id);
                 if (component is null) return Results.NotFound();
                 return Results.Ok(EntityToResponse(component));
             });
 
-            app.MapPost("/component", ([FromServices] DAL<Components> dal, [FromBody] ComponentsRequest componentRequest) =>
+            groupBuilder.MapPost("", ([FromServices] DAL<Components> dal, [FromBody] ComponentsRequest componentRequest) =>
             {
                 dal.Create(RequestToEntity(componentRequest));
                 return Results.Created();
             });
 
-            app.MapPut("/component", ([FromServices] DAL<Components> dal, [FromBody] ComponentsEditRequest componentRequest) =>
+            groupBuilder.MapPut("", ([FromServices] DAL<Components> dal, [FromBody] ComponentsEditRequest componentRequest) =>
             {
                 var componentToEdit = dal.ReadBy(t => t.Id == componentRequest.Id);
                 if (componentToEdit is null) return Results.NotFound();
@@ -40,7 +44,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Created();
             });
 
-            app.MapDelete("/component/{id}", ([FromServices] DAL<Components> dal, int id) =>
+            groupBuilder.MapDelete("/{id}", ([FromServices] DAL<Components> dal, int id) =>
             {
                 var component = dal.ReadBy(t => t.Id == id);
                 if (component is null) return Results.NotFound();
@@ -63,7 +67,7 @@ namespace DM106ProjectMgmt_API.EndPoints
         // Converte um projeto para uma resposta
         private static ComponentsResponse EntityToResponse(Components entity)
         {
-            return new ComponentsResponse(entity.Id, entity.PartNumber, entity.Description);
+            return new ComponentsResponse(entity.PartNumber, entity.Description);
         }
     }
 }

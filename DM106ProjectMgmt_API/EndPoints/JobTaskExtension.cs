@@ -10,27 +10,31 @@ namespace DM106ProjectMgmt_API.EndPoints
     {
         public static void AddEndPointsJobTask(this WebApplication app)
         {
+            var groupBuilder = app.MapGroup("task")
+                .RequireAuthorization()
+                .WithTags("Job Tasks");
+
             // Endpoints para JobTasks
-            app.MapGet("/task", ([FromServices] DAL<JobTask> dal) =>
+            groupBuilder.MapGet("", ([FromServices] DAL<JobTask> dal) =>
             {
                 var taskList = dal.Read();
                 if (taskList is null) return Results.NotFound();
                 return Results.Ok(EntityListToResponseList(taskList));
             });
-            app.MapGet("/task/{id}", (int id, [FromServices] DAL<JobTask> dal) =>
+            groupBuilder.MapGet("/{id}", (int id, [FromServices] DAL<JobTask> dal) =>
             {
                 var task = dal.ReadBy(t => t.Id == id);
                 if (task is null) return Results.NotFound();
                 return Results.Ok(EntityToResponse(task));
             });
 
-            app.MapPost("/task", ([FromServices] DAL<JobTask> dal, [FromBody] JobTaskRequest taskRequest) =>
+            groupBuilder.MapPost("", ([FromServices] DAL<JobTask> dal, [FromBody] JobTaskRequest taskRequest) =>
             {
                 dal.Create(new JobTask(taskRequest.Title, taskRequest.Owner, taskRequest.Status));
                 return Results.Created();
             });
 
-            app.MapPut("/task", ([FromServices] DAL<JobTask> dal, [FromBody] JobTaskEditRequest taskRequest) =>
+            groupBuilder.MapPut("", ([FromServices] DAL<JobTask> dal, [FromBody] JobTaskEditRequest taskRequest) =>
             {
                 var taskToEdit = dal.ReadBy(t => t.Id == taskRequest.Id);
                 if (taskToEdit is null) return Results.NotFound();
@@ -41,7 +45,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Created();
             });
 
-            app.MapDelete("/task/{id}", ([FromServices] DAL<JobTask> dal, int id) =>
+            groupBuilder.MapDelete("/{id}", ([FromServices] DAL<JobTask> dal, int id) =>
             {
                 var task = dal.ReadBy(t => t.Id == id);
                 if (task is null) return Results.NotFound();
@@ -56,12 +60,9 @@ namespace DM106ProjectMgmt_API.EndPoints
         private static JobTaskResponse EntityToResponse(JobTask task)
         {
             return new JobTaskResponse(
-            task.Id,
             task.Title ?? string.Empty,
             task.Owner ?? string.Empty,
-            task.Status ?? string.Empty,
-            task.MachineDesign?.Id ?? 0,
-            task.MachineDesign?.Name ?? "No linked equipment");
+            task.Status ?? string.Empty);
         }
     }
 }
