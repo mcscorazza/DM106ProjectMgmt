@@ -15,8 +15,13 @@ namespace DM106ProjectMgmt_API.EndPoints
             {
                 var taskList = dal.Read();
                 if (taskList is null) return Results.NotFound();
-                var taskResponseList = EntityListToResponseList(taskList);
-                return Results.Ok(taskResponseList);
+                return Results.Ok(EntityListToResponseList(taskList));
+            });
+            app.MapGet("/task/{id}", (int id, [FromServices] DAL<JobTask> dal) =>
+            {
+                var task = dal.ReadBy(t => t.Id == id);
+                if (task is null) return Results.NotFound();
+                return Results.Ok(EntityToResponse(task));
             });
 
             app.MapPost("/task", ([FromServices] DAL<JobTask> dal, [FromBody] JobTaskRequest taskRequest) =>

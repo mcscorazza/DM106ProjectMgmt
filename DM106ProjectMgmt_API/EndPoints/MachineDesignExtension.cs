@@ -17,15 +17,25 @@ namespace DM106ProjectMgmt_API.EndPoints
             {
                 var designList = dal.Read();
                 if (designList is null) return Results.NotFound();
-                var designResponseList = EntityListToResponseList(designList);
-                return Results.Ok(designResponseList);
+                return Results.Ok(EntityListToResponseList(designList));
             }
             );
-
-            app.MapPost("/design", ([FromServices] DAL<MachineDesign> dal, [FromBody] MachineDesignRequest designRequest) =>
+            app.MapGet("/design/{id}", (int id, [FromServices] DAL<MachineDesign> dal) =>
             {
-                var design = new MachineDesign(designRequest.Name, designRequest.DrawingCode, designRequest.Client);
-                dal.Create(design);
+                var design = dal.ReadBy(d => d.Id == id);
+                if (design is null) return Results.NotFound();
+                return Results.Ok(EntityToResponse(design));
+            });
+
+            app.MapPost("/design", ([FromServices] DAL<MachineDesign> dal, [FromServices] DAL<Components> dalComponents, [FromBody] MachineDesignRequest design) =>
+            {
+                var machineDesign = new MachineDesign(design.Name, design.DrawingCode, design.Client)
+                {
+                    Components = design.Components is not null ?
+                        ComponentRequestConverter(design.Components, dalComponents) :
+                        new List<Components>()
+                };
+                dal.Create(machineDesign);
                 return Results.Created();
             });
 
@@ -49,14 +59,40 @@ namespace DM106ProjectMgmt_API.EndPoints
             });
         }
 
+        // Converte a lista de Componentes para uma lista de respostas
+        private static ICollection<Components> ComponentRequestConverter(
+            ICollection<ComponentsRequest> components,
+            DAL<Components> dalComponents)
+        {
+            var compList = new List<Components>();
+            foreach (var item in components)
+            {
+                var entity = RequestToEntity(item);
+                var comp = dalComponents.ReadBy(l => l.PartNumber.ToUpper().Equals(entity.PartNumber.ToUpper()));
+                if (comp is not null) compList.Add(comp);
+                else compList.Add(entity);
+            }
+            return compList;
+        }
+
+        private static Components RequestToEntity(ComponentsRequest componentRequest)
+        {
+            return new Components() { 
+                PartNumber = componentRequest.PartNumber, 
+                Description = componentRequest.Description 
+            };
+        }
+
+
+        // Converte a lista de Projetos para uma lista de respostas
         private static ICollection<MachineDesignResponse> EntityListToResponseList(IEnumerable<MachineDesign> entities)
         {
             return entities.Select(a => EntityToResponse(a)).ToList();
         }
+        // Converte um projeto para uma resposta
         private static MachineDesignResponse EntityToResponse(MachineDesign entity)
         {
             return new MachineDesignResponse(entity.Id, entity.Name, entity.DrawingCode, entity.Client);
         }
-
     }
 }

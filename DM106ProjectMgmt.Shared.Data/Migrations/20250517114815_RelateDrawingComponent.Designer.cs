@@ -3,6 +3,7 @@ using DM106ProjectMgmt.Shared.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DM106ProjectMgmt.Shared.Data.Migrations
 {
     [DbContext(typeof(DM106ProjectMgmtContext))]
-    partial class DM106ProjectMgmtContextModelSnapshot : ModelSnapshot
+    [Migration("20250517114815_RelateDrawingComponent")]
+    partial class RelateDrawingComponent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +27,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ComponentsMachineDesign", b =>
+            modelBuilder.Entity("ComponentMachineDesign", b =>
                 {
                     b.Property<int>("ComponentsId")
                         .HasColumnType("int");
@@ -36,10 +39,10 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasIndex("DesignId");
 
-                    b.ToTable("ComponentsMachineDesign");
+                    b.ToTable("ComponentMachineDesign");
                 });
 
-            modelBuilder.Entity("DM106ProjectMgmt.Shared.Models.Components", b =>
+            modelBuilder.Entity("DM106ProjectMgmt.Shared.Models.Component", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -115,9 +118,9 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
                     b.ToTable("MachineDesign");
                 });
 
-            modelBuilder.Entity("ComponentsMachineDesign", b =>
+            modelBuilder.Entity("ComponentMachineDesign", b =>
                 {
-                    b.HasOne("DM106ProjectMgmt.Shared.Models.Components", null)
+                    b.HasOne("DM106ProjectMgmt.Shared.Models.Component", null)
                         .WithMany()
                         .HasForeignKey("ComponentsId")
                         .OnDelete(DeleteBehavior.Cascade)

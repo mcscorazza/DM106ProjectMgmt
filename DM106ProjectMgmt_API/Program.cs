@@ -9,6 +9,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
 builder.Services.AddDbContext<DM106ProjectMgmtContext>();
 builder.Services.AddTransient<DAL<MachineDesign>>();
 builder.Services.AddTransient<DAL<JobTask>>();
+builder.Services.AddTransient<DAL<Components>>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,6 +18,7 @@ var app = builder.Build();
 
 app.AddEndPointsMachineDesign();
 app.AddEndPointsJobTask();
+app.AddEndPointsComponents();
 
 app.UseSwagger();
 app.UseSwaggerUI();

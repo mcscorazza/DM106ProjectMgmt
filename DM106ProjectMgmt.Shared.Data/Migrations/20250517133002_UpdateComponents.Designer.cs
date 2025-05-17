@@ -3,6 +3,7 @@ using DM106ProjectMgmt.Shared.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DM106ProjectMgmt.Shared.Data.Migrations
 {
     [DbContext(typeof(DM106ProjectMgmtContext))]
-    partial class DM106ProjectMgmtContextModelSnapshot : ModelSnapshot
+    [Migration("20250517133002_UpdateComponents")]
+    partial class UpdateComponents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
