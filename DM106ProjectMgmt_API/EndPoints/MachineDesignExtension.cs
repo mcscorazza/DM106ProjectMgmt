@@ -39,6 +39,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                     Components = design.Components is not null ?
                         ComponentRequestConverter(design.Components, dalComponents) :
                         new List<Components>()
+
                 };
                 dal.Create(machineDesign);
                 return Results.Created();
@@ -92,8 +93,9 @@ namespace DM106ProjectMgmt_API.EndPoints
         // Converte a lista de Projetos para uma lista de respostas
         private static ICollection<MachineDesignResponse> EntityListToResponseList(IEnumerable<MachineDesign> entities)
         {
-            return entities.Select(a => EntityToResponse(a)).ToList();
+            return entities.Select(e => EntityToResponse(e)).ToList();
         }
+        
         // Converte um projeto para uma resposta
         private static MachineDesignResponse EntityToResponse(MachineDesign entity)
         {
@@ -103,9 +105,12 @@ namespace DM106ProjectMgmt_API.EndPoints
                 entity.DrawingCode, 
                 entity.Client, 
                 entity.JobTasks.Select(task => new JobTaskResponse(
-                    task.Owner,
+                    task.Title,
                     task.Owner,
                     task.Status)).ToList(),
+                entity.Requirement.Select(req => new RequirementResponse(
+                    req.Description,
+                    req.Type)).ToList(),
                 entity.Components.Select(comp => new ComponentsResponse(
                     comp.PartNumber,
                     comp.Description)).ToList()

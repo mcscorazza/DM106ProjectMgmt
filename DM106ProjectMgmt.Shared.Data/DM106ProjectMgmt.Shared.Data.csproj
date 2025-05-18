@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20250516192617_RemoveJobTaskOwner.cs" />
+    <Compile Remove="Migrations\20250516192617_RemoveJobTaskOwner.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.16" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />

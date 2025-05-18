@@ -13,6 +13,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
 builder.Services.AddDbContext<DM106ProjectMgmtContext>();
 builder.Services.AddTransient<DAL<MachineDesign>>();
 builder.Services.AddTransient<DAL<JobTask>>();
+builder.Services.AddTransient<DAL<Requirement>>();
 builder.Services.AddTransient<DAL<Components>>();
 
 
@@ -31,6 +32,7 @@ app.UseAuthorization();
 app.AddEndPointsMachineDesign();
 app.AddEndPointsJobTask();
 app.AddEndPointsComponents();
+app.AddEndPointsRequirement();
 
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -4,6 +4,7 @@ using DM106ProjectMgmt.Shared.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DM106ProjectMgmt.Shared.Data.Migrations
 {
     [DbContext(typeof(DM106ProjectMgmtContext))]
-    partial class DM106ProjectMgmtContextModelSnapshot : ModelSnapshot
+    [Migration("20250518211515_DataEntryRequirements")]
+    partial class DataEntryRequirements
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasIndex("DesignId");
 
-                    b.ToTable("ComponentsMachineDesign", (string)null);
+                    b.ToTable("ComponentsMachineDesign");
                 });
 
             modelBuilder.Entity("DM106ProjectMgmt.Shared.Data.Models.AccessRole", b =>
@@ -156,7 +159,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Components", (string)null);
+                    b.ToTable("Components");
                 });
 
             modelBuilder.Entity("DM106ProjectMgmt.Shared.Models.JobTask", b =>
@@ -186,7 +189,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasIndex("MachineDesignId");
 
-                    b.ToTable("JobTask", (string)null);
+                    b.ToTable("JobTask");
                 });
 
             modelBuilder.Entity("DM106ProjectMgmt.Shared.Models.MachineDesign", b =>
@@ -211,7 +214,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MachineDesign", (string)null);
+                    b.ToTable("MachineDesign");
                 });
 
             modelBuilder.Entity("DM106ProjectMgmt.Shared.Models.Requirement", b =>
@@ -237,7 +240,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasIndex("MachineDesignId");
 
-                    b.ToTable("Requirement", (string)null);
+                    b.ToTable("Requirement");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
