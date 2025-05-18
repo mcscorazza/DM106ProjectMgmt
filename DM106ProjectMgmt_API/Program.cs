@@ -35,9 +35,10 @@ app.AddEndPointsComponents();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapGroup("auth").MapIdentityApi<AccessUser>().WithTags("Authorization");
+app.MapGroup("auth").MapIdentityApi<AccessUser>().WithTags("Authoization");
 
-app.MapPost("auth/logout", async ([FromServices] SignInManager<AccessUser> signInManager) => {
+app.MapPost("auth/logout", async ([FromServices] SignInManager<AccessUser> signInManager) =>
+{
     await signInManager.SignOutAsync();
     return Results.Ok();
 }).RequireAuthorization().WithTags("Authorization");

@@ -37,7 +37,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasIndex("DesignId");
 
-                    b.ToTable("ComponentsMachineDesign");
+                    b.ToTable("ComponentsMachineDesign", (string)null);
                 });
 
             modelBuilder.Entity("DM106ProjectMgmt.Shared.Data.Models.AccessRole", b =>
@@ -156,7 +156,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Components");
+                    b.ToTable("Components", (string)null);
                 });
 
             modelBuilder.Entity("DM106ProjectMgmt.Shared.Models.JobTask", b =>
@@ -186,7 +186,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasIndex("MachineDesignId");
 
-                    b.ToTable("JobTask");
+                    b.ToTable("JobTask", (string)null);
                 });
 
             modelBuilder.Entity("DM106ProjectMgmt.Shared.Models.MachineDesign", b =>
@@ -211,7 +211,7 @@ namespace DM106ProjectMgmt.Shared.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MachineDesign");
+                    b.ToTable("MachineDesign", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

@@ -24,7 +24,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 if (designList is null) return Results.NotFound();
                 return Results.Ok(EntityListToResponseList(designList));
             }
-            ).RequireAuthorization();
+            );
             groupBuilder.MapGet("/{id}", (int id, [FromServices] DAL<MachineDesign> dal) =>
             {
                 var design = dal.ReadBy(d => d.Id == id);
