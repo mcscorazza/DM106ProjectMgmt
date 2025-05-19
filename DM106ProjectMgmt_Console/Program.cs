@@ -91,9 +91,8 @@ internal class Program
                 string owner = Console.ReadLine();
                 Console.Write("Digite o Status da Tarefa: ");
                 string status = Console.ReadLine();
-                
                 // Adiciona a nova tarefa ao projeto
-                targetDesign.AddTask(new JobTask(title, owner, status));
+                targetDesign.AddTask(new JobTask(title, owner, status, targetDesign.Id));
 
                 // Atualiza o projeto na tabela
                 MachineDesignDAL.Update(targetDesign);
