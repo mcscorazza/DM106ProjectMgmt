@@ -30,6 +30,7 @@ namespace DM106ProjectMgmt.Shared.Models
             Client = client;
         }
 
+
         // Adiciona uma tarefa ao projeto
         public void AddTask(JobTask task)
         {

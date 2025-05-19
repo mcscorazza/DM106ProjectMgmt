@@ -11,8 +11,7 @@ namespace DM106ProjectMgmt.Shared.Models
         public int Id { get; set; }
         public string PartNumber { get; set; }
         public string Description { get; set; }
-
-        public virtual ICollection<MachineDesign> Design { get; set; }
+        public virtual ICollection<MachineDesign> MachineDesign { get; set; }
 
         public override string ToString()
         {

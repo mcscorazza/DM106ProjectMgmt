@@ -9,15 +9,14 @@ namespace DM106ProjectMgmt_API.EndPoints
 {
     public static class MachineDesignExtension
     {
-
         public static void AddEndPointsMachineDesign(this WebApplication app)
         {
-
+            // Cria o grupo de endpoints para Projetos
             var groupBuilder = app.MapGroup("design")
                 .RequireAuthorization()
-                .WithTags("MachineDesign");
+                .WithTags("Projetos");
 
-            // Endpoints para MachineDesign
+            // Endpoint GET para obter todos os Projetos
             groupBuilder.MapGet("", ([FromServices] DAL<MachineDesign> dal) =>
             {
                 var designList = dal.Read();
@@ -25,6 +24,8 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Ok(EntityListToResponseList(designList));
             }
             );
+
+            // Endpoint GET para obter um Projeto específico pelo ID
             groupBuilder.MapGet("/{id}", (int id, [FromServices] DAL<MachineDesign> dal) =>
             {
                 var design = dal.ReadBy(d => d.Id == id);
@@ -32,6 +33,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Ok(EntityToResponse(design));
             });
 
+            // Endpoint POST para criar um novo Projeto
             groupBuilder.MapPost("", ([FromServices] DAL<MachineDesign> dal, [FromServices] DAL<Components> dalComponents, [FromBody] MachineDesignRequest design) =>
             {
                 var machineDesign = new MachineDesign(design.Name, design.DrawingCode, design.Client)
@@ -65,7 +67,7 @@ namespace DM106ProjectMgmt_API.EndPoints
             });
         }
 
-        // Converte a lista de Componentes para uma lista de respostas
+        // Converte a lista de Componentes para uma lista de Response
         private static ICollection<Components> ComponentRequestConverter(
             ICollection<ComponentsRequest> components,
             DAL<Components> dalComponents)
@@ -81,6 +83,7 @@ namespace DM106ProjectMgmt_API.EndPoints
             return compList;
         }
 
+        // Converte um Request para um Componente
         private static Components RequestToEntity(ComponentsRequest componentRequest)
         {
             return new Components() { 
@@ -90,13 +93,13 @@ namespace DM106ProjectMgmt_API.EndPoints
         }
 
 
-        // Converte a lista de Projetos para uma lista de respostas
+        // Converte a lista de Projetos para uma lista de Response
         private static ICollection<MachineDesignResponse> EntityListToResponseList(IEnumerable<MachineDesign> entities)
         {
             return entities.Select(e => EntityToResponse(e)).ToList();
         }
-        
-        // Converte um projeto para uma resposta
+
+        // Converte um projeto para um Response
         private static MachineDesignResponse EntityToResponse(MachineDesign entity)
         {
             return new MachineDesignResponse(

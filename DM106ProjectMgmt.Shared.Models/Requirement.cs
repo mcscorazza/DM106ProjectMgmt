@@ -17,11 +17,11 @@ namespace DM106ProjectMgmt.Shared.Models
         public virtual MachineDesign? MachineDesign { get; set; }
 
         // Construtor da classe JobTask
-        public Requirement(string description, string type, int designId )
+        public Requirement(string description, string type, int machineDesignId )
         {
             Description = description;
             Type = type;
-            MachineDesignId = designId;
+            MachineDesignId = machineDesignId;
         }
 
         // Sobrescreve o método ToString() para exibir informações da tarefa

@@ -19,7 +19,7 @@ namespace DM106ProjectMgmt.Shared.Data.DB
         public DbSet<Components> Components { get; set; }
         public DbSet<Requirement> Requirement { get; set; }
 
-        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ProjectMgmt_DB_V0;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ProjectMgmt_DB_V1;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
@@ -31,7 +31,7 @@ namespace DM106ProjectMgmt.Shared.Data.DB
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<MachineDesign>()
                 .HasMany(c => c.Components)
-                .WithMany(d => d.Design);
+                .WithMany(d => d.MachineDesign);
         }
     }
 }

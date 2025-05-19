@@ -10,17 +10,20 @@ namespace DM106ProjectMgmt_API.EndPoints
     {
         public static void AddEndPointsJobTask(this WebApplication app)
         {
+            // Criar o grupo de endpoints para JobTasks
             var groupBuilder = app.MapGroup("task")
                 .RequireAuthorization()
-                .WithTags("Job Tasks");
+                .WithTags("Tarefas");
 
-            // Endpoints para JobTasks
+            // Endpoint GET para obter todas as Tarefas
             groupBuilder.MapGet("", ([FromServices] DAL<JobTask> dal) =>
             {
                 var taskList = dal.Read();
                 if (taskList is null) return Results.NotFound();
                 return Results.Ok(EntityListToResponseList(taskList));
             });
+
+            // Endpoint GET para obter uma Tarefa específica pelo ID
             groupBuilder.MapGet("/{id}", (int id, [FromServices] DAL<JobTask> dal) =>
             {
                 var task = dal.ReadBy(t => t.Id == id);
@@ -28,6 +31,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Ok(EntityToResponse(task));
             });
 
+            // Endpoint POST para criar uma nova Tarefa
             groupBuilder.MapPost("", ([FromServices] DAL<JobTask> dal, [FromBody] JobTaskRequest taskRequest) =>
             {
                 dal.Create(
@@ -41,27 +45,29 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Created();
             });
 
+            // Endpoint PUT para editar uma Tarefa existente
             groupBuilder.MapPut("", ([FromServices] DAL<JobTask> dal, [FromBody] JobTaskEditRequest taskRequest) =>
             {
-                // Verifica se o JobTask a ser editado existe
+                // Verifica se a Tarefa a ser editado existe
                 var taskToEdit = dal.ReadBy(t => t.Id == taskRequest.Id);
 
-                // Se o JobTask não existir, retorna um erro 404 (Not Found)
+                // Se a Tarefa não existir, retorna um erro 404 (Not Found)
                 if (taskToEdit is null) return Results.NotFound();
 
-                // Recupera os dados do JobTask a ser editado
+                // Recupera os dados da Tarefa a ser editada
                 taskToEdit.Title = taskRequest.Title;
                 taskToEdit.Owner = taskRequest.Owner;
                 taskToEdit.Status = taskRequest.Status;
                 taskToEdit.MachineDesignId = taskRequest.MachineDesignId;
 
-                // Atualiza o JobTask no banco de dados
+                // Atualiza a Tarefa no banco de dados
                 dal.Update(taskToEdit);
 
                 // Retorna uma resposta indicando que a atualização foi bem-sucedida
                 return Results.Created();
             });
 
+            // Endpoint DELETE para remover uma Tarefa pelo ID
             groupBuilder.MapDelete("/{id}", ([FromServices] DAL<JobTask> dal, int id) =>
             {
                 var task = dal.ReadBy(t => t.Id == id);
@@ -70,10 +76,14 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.NoContent();
             });
         }
+
+        // Converte uma lista de Tarefas para uma lista de Response
         private static ICollection<JobTaskResponse> EntityListToResponseList(IEnumerable<JobTask> taskList)
         {
             return taskList.Select(a => EntityToResponse(a)).ToList();
         }
+
+        // Converte uma entidade Tarefa para um Response
         private static JobTaskResponse EntityToResponse(JobTask task)
         {
             return new JobTaskResponse(
