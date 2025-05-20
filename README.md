@@ -51,10 +51,13 @@ https://localhost:7221/swagger/index.html
 ```c
 /design
 /design/5 //para listar os dados do Projeto com ID 5
+
 /task
 /task/8 //para listar os dados da Tarefa com ID 8
+
 /requirement
 /requirement/3 //para listar os dados do Requisito com ID 3
+
 /component
 /component/15 //para listar os dados do Componente com ID 15
 ```
@@ -97,6 +100,7 @@ Requisito (onde _machineDesignId_ indica o ID do projeto a vincular o Requisito 
 ```
 Componente
 ```json
+[POST] /component
 {
   "partNumber": "string",
   "description": "string"
