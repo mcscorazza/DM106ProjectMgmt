@@ -8,6 +8,7 @@ namespace DM106ProjectMgmt_API.EndPoints
 {
     public static class ComponentsExtension
     {
+        // Método de extensão para adicionar os endpoints de Componentes
         public static void AddEndPointsComponents(this WebApplication app)
         {
             // Cria o grupo de endpoints para Componentes

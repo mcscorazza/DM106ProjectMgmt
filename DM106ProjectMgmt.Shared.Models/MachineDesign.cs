@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace DM106ProjectMgmt.Shared.Models
 {
+    // Classe que representa um projeto de máquina
     public class MachineDesign
     {
+        // Atributos da classe MachineDesign
         public int Id { get; set; }
         public string Name { get; set; }
         public string DrawingCode { get; set; }
@@ -31,19 +33,19 @@ namespace DM106ProjectMgmt.Shared.Models
         }
 
 
-        // Adiciona uma tarefa ao projeto
+        // Método para adicionar uma Tarefa ao projeto
         public void AddTask(JobTask task)
         {
             JobTasks.Add(task);
         }
 
-        // Adiciona um requisito ao projeto
+        // Método para adicionar um Requisito ao projeto
         public void AddRequirement(Requirement requirement)
         {
             Requirement.Add(requirement);
         }
 
-        // Mostra as tarefas do projeto
+        // Método para listar as tarefas do projeto
         public void showTasks()
         {
             if (JobTasks.Count > 0)
@@ -64,29 +66,7 @@ namespace DM106ProjectMgmt.Shared.Models
             }
         }
 
-        // Mostra os requisitos do projeto
-        public void showRequirements()
-        {
-            if (Requirement.Count > 0)
-            {
-                Console.WriteLine($"Requisitos do Projeto [{Name}]:");
-                Console.WriteLine($"------------------------------------------------------------------------");
-                Console.WriteLine($"| REQUISITO                                          | TIPO            |");
-                Console.WriteLine($"|----------------------------------------------------|-----------------|");
-                foreach (var requirement in Requirement)
-                {
-                    Console.WriteLine(requirement);
-                }
-                Console.WriteLine($"------------------------------------------------------------------------");
-            }
-            else
-            {
-                Console.WriteLine($"Não há requisitos registrados para o projeto {Name}.");
-            }
-        }
-
-
-        // Sobrescreve o método ToString() para exibir informações do projeto
+        // Override do método ToString() para exibir informações do projeto
         public override string ToString()
         {
             return $@"| {Id} | Projeto: {Name}";

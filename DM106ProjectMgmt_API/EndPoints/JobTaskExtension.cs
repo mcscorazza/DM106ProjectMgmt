@@ -8,6 +8,7 @@ namespace DM106ProjectMgmt_API.EndPoints
 {
     public static class JobTaskExtension
     {
+        // Método de extensão para adicionar endpoints relacionados a Tarefas
         public static void AddEndPointsJobTask(this WebApplication app)
         {
             // Criar o grupo de endpoints para JobTasks

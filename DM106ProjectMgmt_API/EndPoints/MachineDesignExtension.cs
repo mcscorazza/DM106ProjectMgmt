@@ -9,6 +9,7 @@ namespace DM106ProjectMgmt_API.EndPoints
 {
     public static class MachineDesignExtension
     {
+        // Método de extensão para adicionar os endpoints relacionados a Projetos
         public static void AddEndPointsMachineDesign(this WebApplication app)
         {
             // Cria o grupo de endpoints para Projetos
@@ -47,6 +48,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Created();
             });
 
+            // Endpoint PUT para editar um Projeto existente
             groupBuilder.MapPut("", ([FromServices] DAL<MachineDesign> dal, [FromBody] MachineDesignEditRequest designRequest) =>
             {
                 var designToEdit = dal.ReadBy(d => d.Id == designRequest.Id);
@@ -58,6 +60,7 @@ namespace DM106ProjectMgmt_API.EndPoints
                 return Results.Created();
             });
 
+            // Endpoint DELETE para remover um Projeto existente
             groupBuilder.MapDelete("/{id}", ([FromServices] DAL<MachineDesign> dal, int id) =>
             {
                 var design = dal.ReadBy(d => d.Id == id);

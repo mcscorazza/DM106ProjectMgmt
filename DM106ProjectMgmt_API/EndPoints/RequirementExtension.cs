@@ -8,6 +8,7 @@ namespace DM106ProjectMgmt_API.EndPoints
 {
     public static class RequirementExtension
     {
+        // Método de extensão para adicionar os endpoints relacionados a Requisitos
         public static void AddEndPointsRequirement(this WebApplication app)
         {
             // Endpoints para Requisitos
